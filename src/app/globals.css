@@ -1,0 +1,330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --yt-red: #FF0000;
+  --yt-black: #0F0F0F;
+  --yt-dark: #181818;
+  --yt-gray: #272727;
+  --yt-light-gray: #3F3F3F;
+  --yt-white: #F1F1F1;
+  --yt-text: #AAAAAA;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--yt-black);
+  color: var(--yt-white);
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--yt-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--yt-light-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Video player styles */
+.video-player-wrapper {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  user-select: none;
+}
+
+.video-player-wrapper video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.video-player-wrapper:focus {
+  outline: none;
+}
+
+/* Progress bar container */
+.progress-container {
+  height: 4px;
+  transition: height 0.1s ease;
+}
+
+.progress-container:hover {
+  height: 6px;
+}
+
+/* Legacy video player styles for backward compatibility */
+.video-player-container {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+}
+
+.video-player-container video {
+  width: 100%;
+  display: block;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 20px 12px 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-player-container:hover .video-controls {
+  opacity: 1;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.progress-bar:hover {
+  height: 6px;
+}
+
+.progress-filled {
+  height: 100%;
+  background: var(--yt-red);
+  border-radius: 2px;
+  position: relative;
+}
+
+.progress-filled::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--yt-red);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.progress-bar:hover .progress-filled::after {
+  opacity: 1;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--yt-gray) 25%, var(--yt-light-gray) 50%, var(--yt-gray) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-yt-red text-white px-4 py-2 rounded font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-yt-gray text-white px-4 py-2 rounded font-medium hover:bg-yt-light-gray transition-colors;
+}
+
+.btn-ghost {
+  @apply bg-transparent text-white px-4 py-2 rounded font-medium hover:bg-yt-gray transition-colors;
+}
+
+/* Input styles */
+.input {
+  @apply w-full bg-yt-dark border border-yt-light-gray rounded px-4 py-2 text-white placeholder-yt-text focus:outline-none focus:border-blue-500;
+}
+
+.input-error {
+  @apply border-red-500;
+}
+
+/* Card styles */
+.card {
+  @apply bg-yt-dark rounded-lg overflow-hidden;
+}
+
+/* Video card hover effect */
+.video-card {
+  @apply cursor-pointer transition-transform duration-200;
+}
+
+.video-card:hover {
+  @apply transform scale-105;
+}
+
+.video-card:hover .video-thumbnail {
+  @apply opacity-0;
+}
+
+.video-card:hover .video-preview {
+  @apply opacity-100;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50;
+}
+
+.modal-content {
+  @apply bg-yt-dark rounded-lg max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  @apply absolute right-0 top-full mt-2 bg-yt-gray rounded-lg shadow-lg overflow-hidden z-40 min-w-[200px];
+}
+
+.dropdown-item {
+  @apply px-4 py-3 hover:bg-yt-light-gray cursor-pointer flex items-center gap-3;
+}
+
+/* Notification badge */
+.notification-badge {
+  @apply absolute -top-1 -right-1 bg-yt-red text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold;
+}
+
+/* Subscribe button */
+.subscribe-btn {
+  @apply bg-white text-black px-4 py-2 rounded-full font-medium hover:bg-gray-200 transition-colors;
+}
+
+.subscribe-btn.subscribed {
+  @apply bg-yt-gray text-white hover:bg-yt-light-gray;
+}
+
+/* Comment section */
+.comment-input {
+  @apply bg-transparent border-b border-yt-light-gray focus:border-white outline-none py-2 w-full text-white placeholder-yt-text;
+}
+
+/* Share modal */
+.share-option {
+  @apply flex items-center gap-3 p-3 rounded-lg hover:bg-yt-gray cursor-pointer transition-colors;
+}
+
+/* Responsive video grid */
+.video-grid {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+@media (max-width: 640px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* Mobile-friendly modal */
+@media (max-width: 640px) {
+  .modal-content {
+    @apply mx-2 max-h-[85vh];
+  }
+}
+
+/* Speed selector */
+.speed-selector {
+  @apply absolute bottom-full right-0 mb-2 bg-yt-gray rounded-lg overflow-hidden shadow-lg;
+}
+
+.speed-option {
+  @apply px-4 py-2 hover:bg-yt-light-gray cursor-pointer text-sm whitespace-nowrap;
+}
+
+.speed-option.active {
+  @apply text-yt-red;
+}
+
+/* Notification item */
+.notification-item {
+  @apply flex gap-3 p-4 hover:bg-yt-gray cursor-pointer border-b border-yt-gray;
+}
+
+.notification-item.unread {
+  @apply bg-yt-gray/30;
+}

@@ -1,0 +1,43 @@
+# Render.com Deployment Configuration
+# See https://render.com/docs/blueprint-spec for full specification
+
+services:
+  # Web Service (Next.js App)
+  - type: web
+    name: youtube-clone
+    env: node
+    region: oregon # Choose your preferred region
+    plan: free # Options: free, starter, standard, pro
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # Set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true # Auto-generate secure value
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        fromService:
+          type: web
+          name: youtube-clone
+          property: host
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "100"
+
+# Optional: Add a MongoDB service if not using Atlas
+# databases:
+#   - name: youtube-clone-db
+#     engine: mongodb
+#     plan: free
